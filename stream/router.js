@@ -16,10 +16,10 @@ router.get('/stream', async (req, res) => {
 
 router.post('/message', async (req, res) => {
     console.log('got a request on /message: ', req.body)
-    const { message, email } = req.body
+    const { message, username } = req.body
     await Messages.create({
         message,
-        email
+        username
     })
     const messages = await Messages.findAll()
     const data = JSON.stringify(messages)

@@ -1,8 +1,16 @@
 const Sequelize = require('sequelize')
 const db = require('../db')
 
-const Chatroom = db.define('chatroom', {
-    message: Sequelize.STRING
+const Messages = db.define('messages', {
+    message: {
+        type: Sequelize.STRING,
+        allowNull: false
+    },
+    email: {
+        type: Sequelize.STRING,
+        allowNull: false
+    }
+
 })
 
-module.exports = Chatroom
+module.exports = Messages

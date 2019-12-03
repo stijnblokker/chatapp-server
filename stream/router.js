@@ -1,5 +1,5 @@
 const { Router } = require('express')
-const Chatroom = require('./model')
+const Messages = require('./model')
 const Sse = require('json-sse')
 
 const router = new Router()
@@ -7,7 +7,7 @@ const stream = new Sse()
 
 router.get('/stream', async (req, res) => {
     console.log('got a request on /stream')
-    const messages = await Chatroom.findAll()
+    const messages = await Messages.findAll()
     const data = JSON.stringify(messages)
     console.log('stringified messages in db:', data);
     stream.updateInit(data)
@@ -16,17 +16,15 @@ router.get('/stream', async (req, res) => {
 
 router.post('/message', async (req, res) => {
     console.log('got a request on /message: ', req.body)
-    const { message } = req.body
-    const entity = await Chatroom.create({
-        message: message
+    const { message, email } = req.body
+    await Messages.create({
+        message,
+        email
     })
-
-    const messages = await Chatroom.findAll()
+    const messages = await Messages.findAll()
     const data = JSON.stringify(messages)
-    // console.log('stringified messages in db:', data);
     stream.send(data)
-
     res.status(201)
-    res.send('Thanks for your message!') 
-} )
+    res.send('Thanks for your message!')
+})
 module.exports = router

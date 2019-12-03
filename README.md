@@ -7,8 +7,8 @@ This is a chat app made during and after the Codaisseur full stack developer boo
 - send messages (real-time)
 
 ## Other repositories:
-Client: you are here!
-Server: https://github.com/stijnblokker/chatapp-client
+- Client: https://github.com/stijnblokker/chatapp-client
+- Server: you are here!
 
 ## Technologies used:
 - react

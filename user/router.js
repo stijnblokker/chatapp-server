@@ -6,16 +6,16 @@ const { toData, toJWT } = require('./jwt')
 router = new Router
 router.post('/user', (req, res) => {
   console.log('got a request on /user');
-  const email = req.body.email
+  const username = req.body.username
   const password = req.body.password
 
-  if (!email || !password) {
+  if (!username || !password) {
     res.status(400).send({
-      message: 'Please supply valid email or password'
+      message: 'Please supply valid username or password'
     })
   } else {
     User.create({
-      email: email,
+      username: username,
       password: bcrypt.hashSync(password, 10)
     })
       .then(user => res.status(201).send('OK'))
@@ -23,30 +23,30 @@ router.post('/user', (req, res) => {
 })
 
 router.post('/login', (req, res) => {
-  const email = req.body.email
+  const username = req.body.username
   const password = req.body.password
 
-  if (!email || !password) {
+  if (!username || !password) {
     res.status(400).send({
-      message: 'Please supply a valid email and password'
+      message: 'Please supply a valid username and password'
     })
   }
   else {
     User
       .findOne({
         where: {
-          email: req.body.email
+          username: req.body.username
         }
       })
       .then(entity => {
         if (!entity) {
           res.status(400).send({
-            message: 'User with that email does not exist'
+            message: 'User with that username does not exist'
           })
         }
         else if (bcrypt.compareSync(req.body.password, entity.password)) {
           res.send({
-            email: req.body.email,
+            username: req.body.username,
             jwt: toJWT({ userId: entity.id })
           })
         }

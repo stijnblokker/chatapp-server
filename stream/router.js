@@ -19,10 +19,10 @@ router.get('/stream/:id', async (req, res) => {
 
 router.post('/message', async (req, res) => {
     console.log('got a request on /message: ', req.body)
-    const { message, username, chatroomId } = req.body
+    const { message, userId, chatroomId } = req.body
     await Messages.create({
         message,
-        username,
+        userId,
         chatroomId
     })
     const messages = await Messages.findAll({

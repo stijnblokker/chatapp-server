@@ -8,13 +8,13 @@ const Messages = db.define('messages', {
         type: Sequelize.STRING,
         allowNull: false
     },
-    username: {
-        type: Sequelize.STRING,
+    userId: {
+        type: Sequelize.INTEGER,
         allowNull: false
     }
 })
 
-Messages.belongsTo(Chatroom)
-Chatroom.hasMany(Messages)
+// Messages.belongsTo(Chatroom)
+// Chatroom.hasMany(Messages)
 
 module.exports = Messages

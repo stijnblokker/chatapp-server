@@ -4,8 +4,4 @@ const databaseUrl = process.env.DATABASE_URL || 'postgres://postgres:secret@loca
 
 const db = new Sequelize(databaseUrl)
 
-db.sync({force: true})
-    .then( () => console.log('database in sync') )
-    .catch( error => console.log('DB error:', error) )
-
 module.exports = db

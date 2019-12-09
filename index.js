@@ -4,6 +4,7 @@ const cors = require('cors')
 
 const streamRouter = require('./stream/router')
 const userRouter = require('./user/router')
+const ChatroomRouter = require('./chatroom/router')
 const app = express()
 
 const port = process.env.PORT || 5000
@@ -20,3 +21,4 @@ app.get('/', (req, res) => {
 
 app.use(streamRouter)
 app.use(userRouter)
+app.use(ChatroomRouter)

@@ -5,9 +5,12 @@ const Sse = require('json-sse')
 const router = new Router()
 const stream = new Sse()
 
-router.get('/stream', async (req, res) => {
-    console.log('got a request on /stream')
-    const messages = await Messages.findAll()
+router.get('/stream/:id', async (req, res) => {
+    console.log('got a request on /stream', req.params.id)
+    const messages = await Messages.findAll({
+        where: {
+          chatroomId: req.params.id
+        }})
     const data = JSON.stringify(messages)
     console.log('stringified messages in db:', data);
     stream.updateInit(data)
@@ -16,12 +19,16 @@ router.get('/stream', async (req, res) => {
 
 router.post('/message', async (req, res) => {
     console.log('got a request on /message: ', req.body)
-    const { message, username } = req.body
+    const { message, username, chatroomId } = req.body
     await Messages.create({
         message,
-        username
+        username,
+        chatroomId
     })
-    const messages = await Messages.findAll()
+    const messages = await Messages.findAll({
+        where: {
+          chatroomId: chatroomId
+        }})
     const data = JSON.stringify(messages)
     stream.send(data)
     res.status(201)
